@@ -1,6 +1,8 @@
 # pull official base image
 FROM python:3.12-slim-bullseye
-
+RUN apt update
+RUN apt install python3-dev default-libmysqlclient-dev build-essential pkg-config -y
+RUN apt install netcat -y
 # set work directory
 WORKDIR /app
 
