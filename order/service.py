@@ -1,9 +1,8 @@
 from decimal import Decimal
-
+from .tasks import settlement
 from django.db import transaction
 from django.db.models import F
 from rest_framework.exceptions import NotAcceptable
-from rest_framework.response import Response
 
 from .models import User, Order
 
@@ -28,3 +27,5 @@ class OrderService:
                 amount=amount,
                 price=total_cost
             )
+
+            settlement.apply_async(args=[currency])
