@@ -23,8 +23,6 @@ services:
     volumes:
       - ./data/mysql:/var/lib/mysql
       - ./init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
-    env_file:
-      - .env.sample
     environment:
       MYSQL_USER: abantether
       MYSQL_PASSWORD: abanpass
@@ -39,6 +37,8 @@ services:
 
   celery:
     build: .
+    env_file:
+      - .env.sample
     environment:
       - MODE=worker
     depends_on:
