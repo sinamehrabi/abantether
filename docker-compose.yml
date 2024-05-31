@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+    volumes:
+      - static:/static
+    environment:
+      - MODE=web
+    depends_on:
+      - redis
+      - db
+    env_file:
+      - .env.sample
+  db:
+    image: mysql:latest
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    env_file:
+      - .env.sample
+
+  redis:
+    image: redis:alpine
+    volumes:
+      - ./data/redis:/data
+
+
+  celery:
+    build: .
+    environment:
+      - MODE=worker
+    depends_on:
+      - redis
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static:/static
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    restart: "on-failure"
+
+volumes:
+  static:
