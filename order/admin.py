@@ -3,7 +3,7 @@ from .models import Order, User
 
 
 class OrderAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'amount', 'is_settled')
 
 
 class UserAdmin(admin.ModelAdmin):
