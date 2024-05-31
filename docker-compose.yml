@@ -15,12 +15,21 @@ services:
       - .env.sample
   db:
     image: mysql:latest
+    container_name: 'mydb'
+    command: --init-file /docker-entrypoint-initdb.d/init-script.sql
+
     ports:
       - '3306:3306'
     volumes:
       - ./data/mysql:/var/lib/mysql
+      - ./init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
     env_file:
       - .env.sample
+    environment:
+      MYSQL_USER: abantether
+      MYSQL_PASSWORD: abanpass
+      MYSQL_ROOT_PASSWORD: admin1234
+      MYSQL_DATABASE: abantether
 
   redis:
     image: redis:alpine
