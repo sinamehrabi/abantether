@@ -1,1 +1,4 @@
 CREATE DATABASE IF NOT EXISTS abantether;
+CREATE USER 'abantether'@'%' IDENTIFIED BY 'abanpass';
+GRANT ALL PRIVILEGES ON *.* to abantether@'%';
+FLUSH PRIVILEGES;

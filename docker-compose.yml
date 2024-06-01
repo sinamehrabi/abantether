@@ -30,10 +30,7 @@ services:
       - ./init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
 
     environment:
-      MYSQL_USER: abantether
-      MYSQL_PASSWORD: abanpass
       MYSQL_ROOT_PASSWORD: admin1234
-      MYSQL_DATABASE: abantether
 
     restart: "on-failure"
 
