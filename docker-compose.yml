@@ -13,21 +13,30 @@ services:
       - db
     env_file:
       - .env.sample
+
+    restart: "always"
+
   db:
     image: mysql:latest
     container_name: 'mydb'
-    command: --init-file /docker-entrypoint-initdb.d/init-script.sql
+    command:
+      --init-file /docker-entrypoint-initdb.d/init-script.sql
+      --bind-address=0.0.0.0
 
     ports:
       - '3306:3306'
     volumes:
       - ./data/mysql:/var/lib/mysql
       - ./init-script.sql:/docker-entrypoint-initdb.d/init-script.sql
+
     environment:
       MYSQL_USER: abantether
       MYSQL_PASSWORD: abanpass
       MYSQL_ROOT_PASSWORD: admin1234
       MYSQL_DATABASE: abantether
+
+    restart: "on-failure"
+
 
   redis:
     image: redis:alpine
